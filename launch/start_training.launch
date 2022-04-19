@@ -1,0 +1,6 @@
+<launch>
+    <!-- This version uses the openai_ros environments -->
+    <rosparam command="load" file="$(find drl_uav_nav)/config/parrotdrone_ddpg_params.yaml" />
+    <!-- Launch the training system -->
+    <node pkg="drl_uav_nav" name="parrotdrone_goto_ddpg" type="ddpg_train.py" output="screen"/>
+</launch>
