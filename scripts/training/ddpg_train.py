@@ -3,6 +3,7 @@ import rospy
 import numpy as np
 import os
 from openai_ros.openai_ros_common import StartOpenAI_ROS_Environment
+from gym.envs.registration import register
 
 from stable_baselines.ddpg.policies import MlpPolicy
 from stable_baselines.common.noise import NormalActionNoise, OrnsteinUhlenbeckActionNoise, AdaptiveParamNoiseSpec
@@ -10,8 +11,15 @@ from stable_baselines import DDPG
 
 task_and_robot_environment_name = rospy.get_param(
         '/drone/task_and_robot_environment_name')
-env = StartOpenAI_ROS_Environment(
-        task_and_robot_environment_name)
+
+
+reg = register(
+    id='Parrotdrone_Continuous_action-v0',
+    entry_point='parrot_continuous_task_env:ParrotDroneGotoContinuous',
+    timestep_limit=100000,
+    )
+
+env = gym.make(task_and_robot_environment_name)
 #env = gym.make('MountainCarContinuous-v0')
 
 # the noise objects for DDPG
