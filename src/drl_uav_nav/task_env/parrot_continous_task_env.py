@@ -1,12 +1,14 @@
-from openai_ros.task_envs import parrotdrone_goto
+
+# import our training environment
+from openai_ros.task_envs.parrotdrone import parrotdrone_goto
 from gym.envs.registration import register
 
-#Registering the custom environment with gym
-reg = register(
-    id='Parrotdrone_Continuous_action-v0',
-    entry_point='parrot_continuous_task_env:ParrotDroneGotoContinuous',
-    timestep_limit=100000,
-    )
+# #Registering the custom environment with gym
+# reg = register(
+#     id='Parrotdrone_Continuous_action-v0',
+#     entry_point='parrot_continuous_task_env:ParrotDroneGotoContinuous',
+#     timestep_limit=100000,
+#     )
 
 class ParrotDroneGotoContinuous(parrotdrone_goto.ParrotDroneGotoEnv):
     def __init__(self):
