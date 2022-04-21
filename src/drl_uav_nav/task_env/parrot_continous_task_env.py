@@ -2,6 +2,16 @@
 # import our training environment
 from openai_ros.task_envs.parrotdrone import parrotdrone_goto
 from gym.envs.registration import register
+import rospy
+import numpy
+from gym import spaces
+# from gym.envs.registration import register
+from geometry_msgs.msg import Point
+from geometry_msgs.msg import Vector3
+from tf.transformations import euler_from_quaternion
+from openai_ros.task_envs.task_commons import LoadYamlFileParamsTest
+from openai_ros.openai_ros_common import ROSLauncher
+import os
 
 # #Registering the custom environment with gym
 # reg = register(
@@ -32,7 +42,7 @@ class ParrotDroneGotoContinuous(parrotdrone_goto.ParrotDroneGotoEnv):
 
         # Only variable needed to be set here
         #number_actions = rospy.get_param('/drone/n_actions')
-        self.action_space = spaces.Box(low = [-1, -1, -1, -1], high = [1, 1, 1, 1])
+        self.action_space = spaces.Box(low = numpy.array([-1, -1, -1, -1]), high = numpy.array([1, 1, 1, 1]))
 
         # We set the reward range, which is not compulsory but here we do it.
         self.reward_range = (-numpy.inf, numpy.inf)
@@ -113,7 +123,7 @@ class ParrotDroneGotoContinuous(parrotdrone_goto.ParrotDroneGotoEnv):
         self.cumulated_steps = 0.0
 
         # Here we will add any init functions prior to starting the MyRobotEnv
-        super(ParrotDroneGotoEnv, self).__init__(ros_ws_abspath)
+        super(ParrotDroneGotoContinuous, self).__init__(ros_ws_abspath)
 
     def set_actions(self, action):
         linear_speed_vector = [action[0], action[1], action[2]]

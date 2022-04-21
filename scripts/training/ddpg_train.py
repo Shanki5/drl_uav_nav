@@ -1,6 +1,7 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 import gym
 import rospy
+import rospkg
 import numpy as np
 import os
 from openai_ros.openai_ros_common import StartOpenAI_ROS_Environment
@@ -10,7 +11,7 @@ from stable_baselines3.ddpg.policies import MlpPolicy
 from stable_baselines3.common.noise import OrnsteinUhlenbeckActionNoise
 from stable_baselines3 import DDPG
 
-from drl_uav_nav.task_env import parrot_continous_task_env
+#from drl_uav_nav.task_env import parrot_continous_task_env
 
 task_and_robot_environment_name = rospy.get_param(
         '/drone/task_and_robot_environment_name')
@@ -18,9 +19,10 @@ task_and_robot_environment_name = rospy.get_param(
 
 reg = register(
     id='Parrotdrone_Continuous_action-v0',
-    entry_point='drl_uav_nav.task_env.parrot_continuous_task_env:ParrotDroneGotoContinuous',
+    entry_point='drl_uav_nav.task_env.parrot_continous_task_env:ParrotDroneGotoContinuous',
     max_episode_steps=100000,
     )
+from drl_uav_nav.task_env import parrot_continous_task_env
 
 env = gym.make(task_and_robot_environment_name)
 #env = gym.make('MountainCarContinuous-v0')
